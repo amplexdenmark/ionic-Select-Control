@@ -18,10 +18,6 @@
     "ionic",
     "select control for ionic"
   ],
-  "author": {
-    "name": "OSAMES",
-    "url": "https://github.com/OSAMES/ionic-Select-Control"
-  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/OSAMES/ionic-Select-Control/issues"
@@ -29,10 +25,13 @@
   "homepage": "https://github.com/OSAMES/ionic-Select-Control#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-cssnano": "^2.1.1",
+    "gulp-cssnano": "^2.1.2",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.3",
-    "main-bower-files": "^2.11.1"
+    "gulp-uglify": "^1.5.3"
+  },
+  "dependencies": {
+    "angular": "^1.5",
+    "ionic": "^1"
   }
 }

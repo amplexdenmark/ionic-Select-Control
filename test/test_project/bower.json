@@ -1,0 +1,21 @@
+{
+  "name": "test_project",
+  "description": "Test Project using ionic-select-control",
+  "main": "index.js",
+  "authors": [
+    "[object Object]"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/OSAMES/ionic-Select-Control",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ionic-select-control": "^1.7.0"
+  }
+}
