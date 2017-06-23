@@ -59,6 +59,8 @@ angular.module('myApp', ['ionic', '$selectBox'])
 |ng-select-changed|JS function to execute after item selection.|Optional. <br> This function argument name should be 'selectedValue', both in your controller function declaration and in SelectBox ng-select-changed attribute value (function call).|
 |ng-placeholder-class|CSS class to apply to placeholder|Optional.|
 |ng-select-box-class|CSS class to apply to whole select box control|Optional.|
+|ng-popup-class|CSS class to apply to the popup|Optional.|
+|ng-header-class|CSS class to apply to the header in the popup|Optional.|
  
  **Example of object for ng-data:**
  ```javascript

@@ -22,6 +22,7 @@
                 ngData: "@",
                 ngPlaceholder: "@",
                 ngHeaderClass: "@",
+                ngPopupClass: "@",
                 ngSelectChanged: "&",
                 ngPlaceholderClass: "@",
                 ngSelectBoxClass: "@"
@@ -37,6 +38,7 @@
                     var val = $parse($scope.ngData);
                     $scope.ngDataObjects = val($scope.$parent);
                     $scope.ngHeaderClass = ($scope.ngHeaderClass) ? $scope.ngHeaderClass : "";
+                    $scope.ngPopupClass = ($scope.ngPopupClass) ? $scope.ngPopupClass : "";
                     $scope.renderModal();
                     $scope.modal.show().then(function(modal) {
                       $scope.modal.el.style.zIndex = 99;
@@ -74,7 +76,8 @@
                 });
 
                 $scope.renderModal = function () {
-                    $scope.modal = $ionicModal.fromTemplate('<ion-modal-view id="select" class="ionic-select-enable">'
+                    $scope.modal = $ionicModal.fromTemplate('<ion-modal-view id="select" '
+                                                          + 'class="ionic-select-enable ' + $scope.ngPopupClass + '">'
                         + '<ion-header-bar class="' + $scope.ngHeaderClass + '">'
                         + '<h1 class="title">' + $scope.ngTitle + '</h1>'
                         + ' <a ng-click="closeSelectModal()" class="button button-icon icon ion-close ionic-select-enable"></a>'
