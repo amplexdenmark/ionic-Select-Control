@@ -34,14 +34,18 @@ angular.module('myApp', ['ionic', '$selectBox'])
 4. Use the select-box directive:
 
 ```HTML
-  <select-box ng-Selected-Value="selectedValue" 
-          		ng-Item-Name="label" 
-          		ng-Item-Id="id" 
-          		ng-title="Select something!" 
-          		ng-data="mySelectedValue" 
+  <select-box ng-Selected-Value="selectedValue"
+          		ng-Item-Name="label"
+          		ng-Item-Id="id"
+          		ng-title="Select something!"
+          		ng-data="mySelectedValue"
           		ng-placeholder="nothing selected!"
           		ng-select-changed="doSomethingWithSelectedValue(selectedValue)"
           		ng-placeholder-class="myPlaceholderStyle"
+				ngHtmlName="optionalHiddenFieldName"
+				ngIsRequired="true"
+				ngPopup=true
+				ngPopupClass="myIonicPopupClass"
           		>
 
 </select-box>
@@ -59,6 +63,10 @@ angular.module('myApp', ['ionic', '$selectBox'])
 |ng-select-changed|JS function to execute after item selection.|Optional. <br> This function argument name should be 'selectedValue', both in your controller function declaration and in SelectBox ng-select-changed attribute value (function call).|
 |ng-placeholder-class|CSS class to apply to placeholder|Optional.|
 |ng-select-box-class|CSS class to apply to whole select box control|Optional.|
+|ngHtmlName (string | optional)|Allows you to bind an name attribute on the hidden input (useful for form validation)|Optional.|
+|ngIsRequired (string | optional)|Allows you to make the hidden input required (useful for form validation)|Optional.|
+|ngPopup (boolean | optional)|Allows using ionicPopup service instead of ionicModal (it is more elegant for some cases)|Optional.|
+|ngPopupClass (string | optional)|Allows you to bind classes to the ionicPopup configuration|Optional.|
  
  **Example of object for ng-data:**
  ```javascript
@@ -78,8 +86,11 @@ Used libraries (ionic bundle, angular translate) are stored in "lib" root folder
 
 ## History
 
+### Version 1.9.0
+- Merged pull request "HTML field name, required attr, popup alternative, popup class". Thanks [aless673](https://github.com/aless673).
+
 ### Version 1.8.1
-- Merged pull request "Make sure it works from a popup, popover, modal".
+- Merged pull request "Make sure it works from a popup, popover, modal". Thanks [amplexdenmark](https://github.com/amplexdenmark).
 
 ### Version 1.8.0
 - Added whole component styling option.
@@ -91,7 +102,7 @@ Used libraries (ionic bundle, angular translate) are stored in "lib" root folder
 - Fixed "main" section in bower.json.
 
 ### Version 1.6.0
-- Added support for external change value (thanks to Ivo Mans).
+- Added support for external change value Thanks [ivomans](https://github.com/ivomans).
 - Improved Readme.
 
 ### Version 1.5.3
@@ -125,4 +136,4 @@ Used libraries (ionic bundle, angular translate) are stored in "lib" root folder
 ## Contributors
 - Project creator: [domiSchenk](https://github.com/domiSchenk)
 - Fork and current maintainer: [postb99@OSAMES](https://github.com/postb99)
-- Pull requests: [ivomans](https://github.com/ivomans)
+- Merged pull requests: [ivomans](https://github.com/ivomans), [amplexdenmark](https://github.com/amplexdenmark), [aless673](https://github.com/aless673)
