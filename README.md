@@ -54,7 +54,7 @@ angular.module('myApp', ['ionic', '$selectBox'])
 ### Directive parameters
 | Name | Description |Remark |
 | :------------- | :------------- | :------------- |
-|ng-Selected-Value|Variable from scope that will get populated with selected option value|Required. <br> Updated using two-way binding.|
+|ng-Selected-Value|Scope variable that will get populated with selected option value|Required. <br> Updated using two-way binding. It is the internal ng-model of the component's hidden field.|
 |ng-data|Scope object passed to SelectBox, format: list of object with two properties, one for label, one for value|Required.|
 |ng-Item-Name|Name of property for label, in scope object passed to SelectBox|Required.|
 |ng-Item-Id|Name of property for value, in scope object passed to SelectBox|Required.|
@@ -63,11 +63,11 @@ angular.module('myApp', ['ionic', '$selectBox'])
 |ng-select-changed|JS function to execute after item selection.|Optional. <br> This function argument name should be 'selectedValue', both in your controller function declaration and in SelectBox ng-select-changed attribute value (function call).|
 |ng-placeholder-class|CSS class to apply to placeholder|Optional.|
 |ng-select-box-class|CSS class to apply to whole select box control|Optional.|
-|ngHtmlName (string | optional)|Allows you to bind an name attribute on the hidden input (useful for form validation)|Optional.|
-|ngIsRequired (string | optional)|Allows you to make the hidden input required (useful for form validation)|Optional.|
-|ngPopup (boolean | optional)|Allows using ionicPopup service instead of ionicModal (it is more elegant for some cases)|Optional.|
-|ngPopupClass (string | optional)|Allows you to bind classes to the ionicPopup configuration|Optional.|
- 
+|ngHtmlName|String.<br>Allows you to bind an name attribute on the hidden input (useful for form validation)|Optional.|
+|ngIsRequired|Boolean, truthy.<br>Allows you to make the hidden input required (useful for form validation)|Optional.|
+|ngPopup|Boolean, truthy.<br>Allows using ionicPopup service instead of ionicModal (it is more elegant for some cases)|Optional.|
+|ngPopupClass|String.<br>Allows you to bind CSS classes to the ionicPopup configuration|Optional.|
+
  **Example of object for ng-data:**
  ```javascript
 var obj = [
@@ -86,8 +86,8 @@ Used libraries (ionic bundle, angular translate) are stored in "lib" root folder
 
 ## History
 
-### Version 1.9.0
-- Merged pull request "HTML field name, required attr, popup alternative, popup class". Thanks [aless673](https://github.com/aless673).
+### Versions 1.9.0, 1.9.1
+- Merged pull request "HTML field name, required attr, popup alternative, popup class". Thanks [aless673](https://github.com/aless673). Updated Readme.md.
 
 ### Version 1.8.1
 - Merged pull request "Make sure it works from a popup, popover, modal". Thanks [amplexdenmark](https://github.com/amplexdenmark).
@@ -128,11 +128,11 @@ Used libraries (ionic bundle, angular translate) are stored in "lib" root folder
 
 ### Versions 1.0.1 and 1.0.2
 - MIT license added + Readme fix.
- 
+
 ### Version 1.0.0
  - Addition of ng-select-changed attribute to hook a function to handle selected value. (postb99 new fork, from dslack fork).
  - Added Header class support to better integrate with apps (dslack fork).
- 
+
 ## Contributors
 - Project creator: [domiSchenk](https://github.com/domiSchenk)
 - Fork and current maintainer: [postb99@OSAMES](https://github.com/postb99)
