@@ -1,10 +1,10 @@
 (function(){
 
     var _template = [
-        "<div class='selectBox {{ngSelectBoxClass}}' ng-click='showSelectModal()'>",
+        "<div class='selectBox {{ngSelectBoxClass}}' ng-click='show()'>",
         "<span class='selected {{ngPlaceholderClass}}'>{{label}}</span>",
         "<span class='selectArrow'>&#9660</span>",
-        "<input type='hidden'/>",
+        "<input type='hidden' ng-model='ngSelectedValue' name='{{ngHtmlName}}' dynamic-name ng-required='{{ngIsRequired}}'/>",
         "</div>"
     ].join("\n");
 
@@ -20,6 +20,10 @@
                 ngItemName: "@",
                 ngItemId: "@",
                 ngData: "@",
+                ngPopup: "@",
+                ngPopupClass: "@",
+                ngHtmlName: "@",
+                ngIsRequired: "@",
                 ngPlaceholder: "@",
                 ngHeaderClass: "@",
                 ngPopupClass: "@",
@@ -27,27 +31,43 @@
                 ngPlaceholderClass: "@",
                 ngSelectBoxClass: "@"
             },
-            controller: ['$scope', '$element', '$ionicModal', '$parse', function ($scope, $element, $ionicModal, $parse) {
+            controller: ['$scope', '$element', '$ionicModal', '$ionicPopup', '$parse', function ($scope, $element, $ionicModal, $ionicPopup, $parse) {
 
                 $scope.ngPlaceholder = ($scope.ngPlaceholder) ? $scope.ngPlaceholder : '';
+                $scope.ngIsRequired = ($scope.ngIsRequired) ? JSON.parse($scope.ngIsRequired || false) : false;
+                $scope.ngPopup = ($scope.ngPopup) ? JSON.parse($scope.ngPopup || false) : false;
+                $scope.ngPopupClass = ($scope.ngPopupClass) ? $scope.ngPopupClass : '';
                 $scope.label = $scope.ngPlaceholder;
                 $scope.ngPlaceholderClass = ($scope.ngPlaceholderClass) ? $scope.ngPlaceholderClass : '';
                 $scope.ngSelectBoxClass = ($scope.ngSelectBoxClass) ? $scope.ngSelectBoxClass : '';
 
-                $scope.showSelectModal = function () {
+                $scope.show = function () {
                     var val = $parse($scope.ngData);
                     $scope.ngDataObjects = val($scope.$parent);
                     $scope.ngHeaderClass = ($scope.ngHeaderClass) ? $scope.ngHeaderClass : "";
-                    $scope.ngPopupClass = ($scope.ngPopupClass) ? $scope.ngPopupClass : "";
+                    if(JSON.parse($scope.ngPopup || false)) {
+                        $scope.showPopup();
+                    } else {
+                        $scope.showSelectModal();
+                    }
+                }
+                $scope.showSelectModal = function () {
                     $scope.renderModal();
                     $scope.modal.show().then(function(modal) {
-                      $scope.modal.el.style.zIndex = 99;
+                        $scope.modal.el.style.zIndex = 99;
                     });
+                };
+                $scope.showPopup = function () {
+                    $scope.renderPopup();
                 };
 
                 $scope.closeSelectModal = function () {
                     if($scope.modal)
                         $scope.modal.hide();
+                };
+                $scope.closePopup = function () {
+                    if($scope.popup)
+                        $scope.popup.close();
                 };
 
                 $scope.$on('$destroy', function (id) {
@@ -60,24 +80,23 @@
                 });
 
                 $scope.$watch('ngSelectedValue', function (newValue, oldValue) {
-                  //console.log('selected value changed from ', oldValue, ' to ', newValue);
-                 if(undefined != newValue) {
-                   var val = $parse($scope.ngData);
-                   $scope.ngDataObjects = val($scope.$parent);
-                   var i=0, len=$scope.ngDataObjects.length;
-                   for (; i<len; i++) {
-                     if ($scope.ngDataObjects[i][$scope.ngItemId] == newValue) {
-                       //console.log('found descr for ', newValue, ' = ',$scope.ngDataObjects[i][$scope.ngItemName]);
-                       $scope.setPlaceholderLabel($scope.ngDataObjects[i][$scope.ngItemName]);
-                     }
-                   }
-                   } else
-                     $scope.setPlaceholderLabel($scope.ngPlaceholder);
+                    //console.log('selected value changed from ', oldValue, ' to ', newValue);
+                    if(undefined != newValue) {
+                        var val = $parse($scope.ngData);
+                        $scope.ngDataObjects = val($scope.$parent);
+                        var i=0, len=$scope.ngDataObjects.length;
+                        for (; i<len; i++) {
+                            if ($scope.ngDataObjects[i][$scope.ngItemId] == newValue) {
+                                //console.log('found descr for ', newValue, ' = ',$scope.ngDataObjects[i][$scope.ngItemName]);
+                                $scope.setPlaceholderLabel($scope.ngDataObjects[i][$scope.ngItemName]);
+                            }
+                        }
+                    } else
+                        $scope.setPlaceholderLabel($scope.ngPlaceholder);
                 });
 
                 $scope.renderModal = function () {
-                    $scope.modal = $ionicModal.fromTemplate('<ion-modal-view id="select" '
-                                                          + 'class="ionic-select-enable ' + $scope.ngPopupClass + '">'
+                    $scope.modal = $ionicModal.fromTemplate('<ion-modal-view id="select" class="ionic-select-enable">'
                         + '<ion-header-bar class="' + $scope.ngHeaderClass + '">'
                         + '<h1 class="title">' + $scope.ngTitle + '</h1>'
                         + ' <a ng-click="closeSelectModal()" class="button button-icon icon ion-close ionic-select-enable"></a>'
@@ -94,10 +113,22 @@
                     });
                 };
 
+                $scope.renderPopup = function () {
+                    console.log($scope.ngPopupClass);
+                    $scope.popup = $ionicPopup.alert({
+                        title: $scope.ngTitle,
+                        scope: $scope,
+                        template: '<ion-list class="ionic-select-enable">'
+                        + '<ion-item class="ionic-select-enable item-text-wrap" ng-click="clickItem(item);' + '" ng-repeat="item in ngDataObjects" ng-bind-html="item[\'' + $scope.ngItemName + '\']"></ion-item>'
+                        + '</ion-list>',
+                        cssClass: '' + $scope.ngPopupClass
+                    });
+                };
+
                 $scope.clickItem = function (item) {
                     $scope.ngSelectedValue = item[$scope.ngItemId];
                     $scope.label = item[$scope.ngItemName];
-                    $scope.closeSelectModal();
+                    $scope.ngPopup ? $scope.closePopup() : $scope.closeSelectModal();
                     $scope.ngSelectChanged({selectedValue: $scope.ngSelectedValue});
                 };
 
@@ -120,6 +151,15 @@
                         input.attr(name, value);
                     }
                 });
+            }
+        };
+    }).directive('dynamicName', function() {
+        return {
+            restrict: 'A',
+            priority: -1,
+            require: ['ngModel'],
+            link: function (scope, element, attr, ngModel) {
+                ngModel[0].$name = attr.name;
             }
         };
     });
