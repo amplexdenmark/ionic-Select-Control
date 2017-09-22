@@ -8,8 +8,8 @@ While the package name is "ionic-select-control", the module name is "$selectBox
 
 ## Dependencies
 
-This component uses ionic-modal and ionic-list from ionic framework components for the popup.
-Clicking outside the modal popup won't close it.
+This component uses ionic-modal and ionic-list from ionic framework components.
+Clicking outside the modal won't close it.
 
 ## How to use
 
