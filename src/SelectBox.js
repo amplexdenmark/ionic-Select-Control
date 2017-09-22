@@ -26,7 +26,6 @@
                 ngIsRequired: "@",
                 ngPlaceholder: "@",
                 ngHeaderClass: "@",
-                ngPopupClass: "@",
                 ngSelectChanged: "&",
                 ngPlaceholderClass: "@",
                 ngSelectBoxClass: "@"
