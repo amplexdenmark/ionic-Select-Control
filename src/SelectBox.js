@@ -78,7 +78,6 @@
                   if (oldValue == $scope.label) {
                     $scope.setPlaceholderLabel(newValue)
                   }
-                  $scope.setPlaceHolder(newValue)
                 });
 
                 $scope.$watch('ngSelectedValue', function (newValue, oldValue) {
